@@ -14,7 +14,7 @@ Create a `[atoc]` shortcut. The table of contents is automatically generated fro
 
 The following settings can be configured in the file `system/extensions/yellow-system.ini`:
 
-`atocLevel` = the lowest heading level to include in tables of contents (1 to 6). The default is 3.
+`atocLevel` = the lowest heading level to include in tables of contents (1 to 6). The default is 3.  
 `atocNumbering` = whether tables of contents should be numbered (1) or not (0).
 
 ## Styling
