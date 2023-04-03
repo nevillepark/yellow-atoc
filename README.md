@@ -4,7 +4,7 @@ Table of contents with advanced options and customization.
 
 ## How to install an extension
 
-[Download the ZIP file](https://nevillepark/yellow-atoc/archive/main.zip) and copy it into your `system/extensions` folder. [Learn more about extensions.](https://github.com/annaesvensson/yellow-update)
+[Download the ZIP file](https://github.com/nevillepark/yellow-atoc/archive/main.zip) and copy it into your `system/extensions` folder. [Learn more about extensions.](https://github.com/annaesvensson/yellow-update)
 
 ## How to make a table of contents
 
