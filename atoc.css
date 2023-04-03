@@ -1,0 +1,16 @@
+/* Table of contents, with nested numbering system */
+
+.atoc {
+    list-style: decimal inside;
+    padding: 0;
+    margin: 0;
+}
+
+.atoc ol {
+    padding: 0;
+    margin: 0;
+}
+
+.atoc ol > li::marker {
+    content: counters(list-item,".") ". ";
+}
