@@ -14,8 +14,8 @@ Create a `[atoc]` shortcut. The table of contents is automatically generated fro
 
 The following settings can be configured in the file `system/extensions/yellow-system.ini`:
 
-`atocLevel` = the lowest heading level to include in tables of contents (1 to 6). The default is 3.   
-`atocNumbering` = whether tables of contents should be numbered (1) or not (0).
+`atocLevel` = the heading levels to include in tables of contents (`1` to `6`). The default is `3`.   
+`atocNumbering` = whether tables of contents should be numbered (`1`) or not (`0`).
 
 ## Styling
 
@@ -28,3 +28,8 @@ Based on [Toc](https://github.com/annaesvensson/yellow-toc/) by Anna Svensson.
 ## Developer
 
 Neville Park. [Get help](https://datenstrom.se/yellow/help/).
+
+## To do
+
+- [ ] [Nest lists properly](https://stackoverflow.com/questions/5899337/proper-way-to-make-html-nested-list)  
+- [ ] Make it possible to specify numbered/non-numbered ToC in a post's front matter  
