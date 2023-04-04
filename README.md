@@ -21,6 +21,10 @@ The following settings can be configured in the file `system/extensions/yellow-s
 
 By editing `system/extensions/atoc.css`, you can customize the appearance of the table of contents. You can learn more about [styling lists with CSS](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Styling_lists). Your changes will not be overwritten by future updates.
 
+## Acknowledgements
+
+Based on [Toc](https://github.com/annaesvensson/yellow-toc/) by Anna Svensson. 
+
 ## Developer
 
 Neville Park. [Get help](https://datenstrom.se/yellow/help/).
