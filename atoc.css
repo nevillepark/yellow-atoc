@@ -1,13 +1,14 @@
 /* Table of contents, with nested numbering system */
 
-.atoc {
-    list-style: decimal inside;
+.atoc ul {
+    list-style: disc inside;
     padding: 0;
     margin: 0;
 }
 
 .atoc ol {
-    padding: 0;
+    list-style: decimal inside;
+	padding: 0;
     margin: 0;
 }
 
