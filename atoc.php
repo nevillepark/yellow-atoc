@@ -18,44 +18,52 @@ class YellowAtoc {
             $location = $page->getPage("main")->getLocation(true);
             $rawData = $page->getPage("main")->parserData;
             $atocLevel = $this->yellow->system->get("atocLevel");
-            preg_match_all("/<h([2-$atocLevel]) id=\"(.*?)\">(.*?)<\/h\d>/i", $rawData, $matches, PREG_SET_ORDER);
+
+            preg_match_all("/<h([1-$atocLevel]) id=\"(.*?)\">(.*?)<\/h\d>/i", $rawData, $matches, PREG_PATTERN_ORDER);
 
             // Variables
             if ($this->yellow->system->get("atocNumbering")) {$listType = "ol";} else {$listType = "ul";}
-            $prev = 1;
-            $counter = 1;
+            $level = $matches[1];
+            $anchor = $matches[2];
+            $title = $matches[3];
+            $min = min($level);
+            $count = count($level);
+            $prev = $min - 1;
+            $counter = 0;
 
             // Start list
-            $output = "<!-- AToC -->\n" . "<nav class=\"atoc\">"; 
-            foreach ($matches as $match) {
+            $output = "<!-- AToC -->" . "<nav class=\"atoc\">";
+            for ( $a = $counter; $a < $count; $a++ ) {
                 // Variables
-                $current = $match[1];
+                $current = $level[$a];
                 $diff = $current - $prev;
-                $entry = "<a href=\"$location#$match[2]\">$match[3]</a>";
+                $entry = "<a href=\"$location#$anchor[$a]\">$title[$a]</a>";
+
                 if ($current > $prev) {
                     for ($i = 1; $i <= $diff; $i++) {$output .= "\n<$listType><li>";}
                 } elseif ($current == $prev) {
                     $output .= "</li>\n<li>";
-                } elseif ($current < $prev) {
+                } elseif ( $current < $prev ) {
                     for ($i = -1; $i >= $diff; $i--) {$output .= "</li></$listType>\n";}
                     $output .= "</li>\n<li>";
                 }
+
                 $output .= "$entry";
-                if ( count($matches) === $counter ) {
-                    for ($i = 1; $i <= $diff; $i++) {$output .= "</li></$listType>\n";}
+
+                if ($a == $count - 1) {
+                 for ($i = 1; $i <= $diff; $i++) {$output .= "</li></$listType>\n";}
                     $output .= "</li>";
                 }
                 $prev = $current;
-                $counter++;
             }
-
+            
             // Close list
             $output .= "</$listType>\n";
-			$output .= "</nav>\n<!--/AToC-->"; 
+            $output .= "</nav>" . "<!-- /AToC -->"; 
             return $output;
-        };
+        }; 
         return preg_replace_callback("/<p>\[atoc\]<\/p>\n/i", $callback, $text);
-    }
+    } 
     // Handle page extra data
     public function onParsePageExtra($page, $name) {
         $output = null;

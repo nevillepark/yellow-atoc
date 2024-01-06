@@ -1,18 +1,13 @@
 /* Advanced Table of Contents */
 
+/* Play nice with yellow-anchor extension */
+.atoc a.anchor-link {display: none;}
+
 .atoc li li {margin: 0 0.75em;}
 
 /* Unordered (bulleted) lists */
-.atoc ul {
-    list-style: disc inside;
-    padding: 0;
-}
+.atoc ul {list-style: disc inside; padding: 0;}
 
 /* Ordered (numbered) lists */
-.atoc ol {
-    list-style: decimal inside;
-	padding: 0;
-}
-.atoc ol > li::marker {
-    content: counters(list-item,".") ". ";
-}
+.atoc ol {list-style: decimal inside; padding: 0;}
+.atoc ol > li::marker {content: counters(list-item,".") ". ";}
