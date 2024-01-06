@@ -2,7 +2,7 @@
 // Advanced Table of Contents extension
 
 class YellowAtoc {
-    const VERSION = "0.9";
+    const VERSION = "0.8.2";
     public $yellow;     // access to API
 
     // Initialization
