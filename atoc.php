@@ -2,7 +2,7 @@
 // Advanced Table of Contents extension
 
 class YellowAtoc {
-    const VERSION = "0.8.2";
+    const VERSION = "0.9";
     public $yellow;     // access to API
 
     // Initialization
@@ -19,63 +19,66 @@ class YellowAtoc {
             $rawData = $page->getPage("main")->parserData;
             $atocLevel = $this->yellow->system->get("atocLevel");
             // Note: this doesn't play nice when headings have the same title.
-            preg_match_all("/<h([2-$atocLevel]) id=\"(.*?)\">(.*?)<\/h\d>/i", $rawData, $matches, PREG_SET_ORDER);
+            // Also note: to allow <h1> headings in ToC, change "2-$atocLevel" 
+            // to "1-$atocLevel" (but you shouldn't)
+            preg_match_all("/<h([2-$atocLevel]) id=\"(.*?)\">(.*?)<\/h\d>/i", $rawData, $matches, PREG_PATTERN_ORDER);
 
             // Variables
-            // Get list type from system settings; 0 = unordered list (<ul>), 1 = ordered list (<ol>)
+            // Get list type from system settings
+            // 0 = unordered list (<ul>), 1 = ordered list (<ol>)
             if ($this->yellow->system->get("atocNumbering")) {$listType = "ol";} else {$listType = "ul";}
-            $prev = 1;
-            $counter = 1;
+            // Just to make things easier
+            $level = $matches[1];
+            $anchor = $matches[2];
+            $title = $matches[3];
+            // Counting variables
+            $min = min($level);
+            $count = count($level);
+            $prev = $min - 1;
+            $counter = 0;
 
-            // Start list
-            $output = "<!-- AToC -->\n" . "<nav class=\"atoc\">"; // Full version
+            // Start table of contents
+            $output = "<nav class=\"atoc\">"; // Nav version
             // $output = "<!--AToC-->\n" . "<details id=\"atoc\">\n<summary>Table of contents</summary>\n"; // Collapsible version
-			// Loop through array of matches
-            foreach ($matches as $match) {
+            // Start loop 
+            for ( $a = $counter; $a < $count; $a++ ) {
                 // Variables
-                $current = $match[1];
+                $current = $level[$a];
                 $diff = $current - $prev;
-                $entry = "<a href=\"$location#$match[2]\">$match[3]</a>";
-
+                $entry = "<a href=\"$location#$anchor[$a]\">$title[$a]</a>";
                 // If current heading is below previous,
                 if ($current > $prev) {
-                    // start appropriate number of sub-lists
+                    // start appropriate number of sub-lists 
                     for ($i = 1; $i <= $diff; $i++) {$output .= "\n<$listType><li>";}
                 // If current heading is the same level as previous,
                 } elseif ($current == $prev) {
-                    // just close previous entry and start new entry
+                    // close previous entry and start new entry,
                     $output .= "</li>\n<li>";
-                // If current heading is above previous,
-                } elseif ($current < $prev) {
-                    // close sub-lists
+                } elseif ( $current < $prev ) {
+                    // close sub-lists,
                     for ($i = -1; $i >= $diff; $i--) {$output .= "</li></$listType>\n";}
-                    // close parent entry
+                    // and close parent entry
                     $output .= "</li>\n<li>";
                 }
-
-                // Add new entry
+                // Print entry
                 $output .= "$entry";
-
-                // If last entry,
-                if ( count($matches) === $counter ) {
-                    // close sub-lists if necessary
-                    for ($i = 1; $i <= $diff; $i++) {$output .= "</li></$listType>\n";}
+                // If last entry
+                if ($a == $count - 1) {
+                 for ($i = 1; $i <= $diff; $i++) {$output .= "</li></$listType>\n";}
                     // close entry
                     $output .= "</li>";
                 }
-
-                // Before running loop again
+                // Before next loop
                 $prev = $current;
-                $counter++;
-            }
-            // Close list
-            $output .= "</$listType>\n";
-			$output .= "</nav>\n<!--/AToC-->"; // Full version
-			// $output .= "</details>\n<!--/AToC-->"; // Collapsible version
+            } // end loop
+            // End list
+            $output .= "</$listType>\n"
+            $output .= "</nav>"; // Nav version
+            // $output .= "</details>\n<!--/AToC-->"; // Collapsible version
             return $output;
-        };
+        }; // end callback
         return preg_replace_callback("/<p>\[atoc\]<\/p>\n/i", $callback, $text);
-    }
+    } // end OnParseContentHtml function
     // Handle page extra data
     public function onParsePageExtra($page, $name) {
         $output = null;
