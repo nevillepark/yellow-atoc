@@ -1,6 +1,6 @@
-# Advanced Table of Contents 0.8.2
+# Atoc 0.8.2
 
-Generate a nested table of contents from page headings.
+Generate a nested, customizable table of contents.
 
 * [How to install an extension](#how-to-install-an-extension)  
 * [Settings](#settings)  
