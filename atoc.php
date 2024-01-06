@@ -72,7 +72,7 @@ class YellowAtoc {
                 $prev = $current;
             } // end loop
             // End list
-            $output .= "</$listType>\n"
+            $output .= "</$listType>\n";
             $output .= "</nav>"; // Nav version
             // $output .= "</details>\n<!--/AToC-->"; // Collapsible version
             return $output;
